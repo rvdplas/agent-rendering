@@ -7,7 +7,7 @@
  */
 export const markdownContentNegotiationRewrite = {
   source: '/:path*',
-  destination: '/__agent-markdown/:path*',
+  destination: '/agent-markdown/:path*',
   has: [
     {
       type: 'header',
