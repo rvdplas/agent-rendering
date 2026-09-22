@@ -4,9 +4,14 @@ import {
   Field,
   ImageField,
   LinkField,
-  Page,
+  Page as SdkPage,
   RichTextField,
 } from '@sitecore-content-sdk/nextjs';
+import { ConsumerContext } from 'lib/consumer/consumer-mode';
+
+// SDK's Page is a type alias (not an interface), so it can't be extended via
+// declaration merging - this local alias is the single source of truth instead.
+export type Page = SdkPage & { consumer: ConsumerContext };
 
 export type ComponentProps = {
   rendering: ComponentRendering;

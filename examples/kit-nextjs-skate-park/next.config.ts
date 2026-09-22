@@ -4,7 +4,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const nextConfig: NextConfig = {
   // Allow specifying a distinct distDir when concurrently running app in a container
   distDir: process.env.NEXTJS_DIST_DIR || '.next',
-  
+
   // Enable React Strict Mode
   reactStrictMode: true,
 
@@ -33,10 +33,24 @@ const nextConfig: NextConfig = {
     // Disable image optimization in development to avoid upstream timeouts
     unoptimized: process.env.NODE_ENV === 'development',
   },
-  
-  // Sitemap, robots, and AI JSON endpoints via rewrites; handlers live under app/api/
+
+  // Sitemap, robots, AI JSON endpoints, and Markdown content negotiation via rewrites.
   rewrites: async () => {
     return [
+      {
+        // Keep the public URL unchanged, but serve the agent Markdown representation
+        // when the client explicitly requests text/markdown.
+        source: '/:path*',
+        destination: '/api/agent-markdown/:path*',
+        locale: false,
+        has: [
+          {
+            type: 'header',
+            key: 'accept',
+            value: '(.*)text/markdown(.*)',
+          },
+        ],
+      },
       {
         // sitemap.xml serves the main sitemap
         source: '/sitemap.xml',

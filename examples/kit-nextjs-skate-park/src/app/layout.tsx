@@ -24,7 +24,8 @@ export default function RootLayout({
         />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body>{children}</body>
+      {/* suppress warning for browser-extension attributes injected before hydration (e.g. Grammarly) */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

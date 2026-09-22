@@ -3,9 +3,9 @@ import React from "react";
 import {
   ComponentPropsCollection,
   ComponentPropsContext,
-  Page,
   SitecoreProvider,
 } from "@sitecore-content-sdk/nextjs";
+import type { Page } from "src/lib/component-props";
 import scConfig from "sitecore.config";
 import components from ".sitecore/component-map.client";
 

@@ -3,6 +3,7 @@ import React, { useState, JSX } from 'react';
 import { LinkField, Text, TextField, useSitecore, FieldMetadata } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import { getFieldValue } from 'lib/component-props';
+import { getConsumerMode } from 'lib/consumer/consumer-mode';
 import { NavigationFields as Fields, NavigationListItemProps, NavigationProps } from './navigation.props';
 
 const getTextContent = (fields?: Fields): JSX.Element | string => {
@@ -75,6 +76,38 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
   );
 };
 
+// Flattened, always-expanded representation: no hamburger/checkbox state and no
+// click-to-expand behaviour, so every link is present without relying on interaction.
+const NavigationListItemAgent: React.FC<{ fields?: Fields; relativeLevel: number }> = ({
+  fields,
+  relativeLevel,
+}) => {
+  if (!fields) {
+    return null;
+  }
+
+  const hasChildren = fields.Children?.length > 0;
+
+  return (
+    <li className={`rel-level${relativeLevel}`} key={fields.Id}>
+      <CompatibleLink field={getLinkField(fields)} editable={false}>
+        {getTextContent(fields)}
+      </CompatibleLink>
+      {hasChildren && (
+        <ul>
+          {fields.Children.map((childFields, index) => (
+            <NavigationListItemAgent
+              key={`${index}-${childFields.Id}`}
+              fields={childFields}
+              relativeLevel={relativeLevel + 1}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+};
+
 export const Default = ({ params, fields }: NavigationProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { page } = useSitecore();
@@ -84,6 +117,24 @@ export const Default = ({ params, fields }: NavigationProps) => {
     return (
       <div className={`component navigation ${styles}`} id={id}>
         <div className="component-content">[Navigation]</div>
+      </div>
+    );
+  }
+
+  if (getConsumerMode(page) === 'agent') {
+    const agentNavigationItems = Object.values(fields)
+      .filter(Boolean)
+      .map((item: Fields, index) => (
+        <NavigationListItemAgent key={`${index}-${item.Id}`} fields={item} relativeLevel={1} />
+      ));
+
+    return (
+      <div className={`component navigation ${styles}`} id={id}>
+        <div className="component-content">
+          <nav>
+            <ul>{agentNavigationItems}</ul>
+          </nav>
+        </div>
       </div>
     );
   }

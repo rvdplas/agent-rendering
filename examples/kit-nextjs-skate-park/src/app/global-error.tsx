@@ -34,9 +34,11 @@ export default function GlobalError() {
   }
 
   if (page) {
+    // Error pages render the same for every consumer; no detection needed here
+    const pageWithConsumer = { ...page, consumer: { mode: 'default' as const } };
     return (
-      <Providers page={page}>
-        <Layout page={page} />
+      <Providers page={pageWithConsumer}>
+        <Layout page={pageWithConsumer} />
       </Providers>
     );
   }

@@ -1,7 +1,7 @@
 // Shared mock page object for all component tests
 // This eliminates code duplication across test files
 
-import type { Page } from '@sitecore-content-sdk/nextjs';
+import type { Page } from 'lib/component-props';
 
 export const mockPage = {
   layout: {
@@ -20,4 +20,7 @@ export const mockPage = {
     isPreview: false,
   },
   locale: 'en',
+  consumer: {
+    mode: 'default',
+  },
 } as unknown as Page;

@@ -14,7 +14,7 @@
       "components": "@/components",
       "ui": "@/components/ui",
       "lib": "@/lib",
-      "utils": "@/lib/atoms-utils",
+      "utils": "@/lib/utils",
       "hooks": "@/hooks"
     },
     "iconLibrary": "lucide"

@@ -12,6 +12,8 @@ import Providers from "src/Providers";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getBaseUrl } from "src/lib/utils";
+import { detectConsumerMode } from "src/lib/consumer/consumer-mode";
+import type { Page } from "src/lib/component-props";
 
 type PageProps = {
   params: Promise<{
@@ -30,10 +32,12 @@ export default async function Page({ params }: PageProps) {
   // Set site and locale to be available in src/i18n/request.ts for fetching the dictionary
   setRequestLocale(`${site}_${locale}`);
 
+  // Headers are needed for both draft preview tokens and consumer-mode detection
+  const headers = await nextHeaders();
+
   // Fetch the page data from Sitecore
   let page;
   if (draft.isEnabled) {
-    const headers = await nextHeaders();
     const previewData = client.getPreviewData(headers);
     if (isDesignLibraryPreviewData(previewData)) {
       page = await client.getDesignLibraryData(previewData);
@@ -56,10 +60,14 @@ export default async function Page({ params }: PageProps) {
     components,
   );
 
+  // Attach consumer mode to the page object so it flows through the same
+  // props/useSitecore() contract that already carries page.mode.isEditing
+  const pageWithConsumer: Page = { ...page, consumer: detectConsumerMode(headers) };
+
   return (
     <NextIntlClientProvider>
-      <Providers page={page} componentProps={componentProps}>
-        <Layout page={page} baseUrl={baseUrl || undefined} />
+      <Providers page={pageWithConsumer} componentProps={componentProps}>
+        <Layout page={pageWithConsumer} baseUrl={baseUrl || undefined} />
       </Providers>
     </NextIntlClientProvider>
   );

@@ -1,5 +1,6 @@
 import React, { JSX } from "react";
-import { Field, ImageField, Page } from "@sitecore-content-sdk/nextjs";
+import { Field, ImageField } from "@sitecore-content-sdk/nextjs";
+import type { Page } from "src/lib/component-props";
 import Scripts from "src/Scripts";
 import SitecoreStyles from "components/content-sdk/SitecoreStyles";
 import { DesignLibraryApp } from "@sitecore-content-sdk/nextjs";
