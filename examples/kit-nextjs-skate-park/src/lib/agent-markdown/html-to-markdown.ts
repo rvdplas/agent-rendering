@@ -21,8 +21,15 @@ export function htmlToMarkdown(html: string): string {
   turndown.use(gfm);
 
   // These elements never add useful agent-readable content.
+  // Note: Turndown's Node-side HTML parser doesn't nest title/meta/link
+  // under a real <head> element, so remove(['head']) alone does not
+  // cascade to them (e.g. <title>'s text leaks as the first output line).
   turndown.remove([
     'head',
+    'title',
+    'meta',
+    'link',
+    'base',
     'script',
     'style',
     'noscript',
@@ -34,9 +41,15 @@ export function htmlToMarkdown(html: string): string {
   replacement: () => '',
 });
 
-  const markdown = turndown.turndown(html);
+  const markdown = turndown.turndown(stripHead(html));
 
   return normalizeMarkdown(markdown);
+}
+
+// Belt-and-suspenders: strip the <head> block outright before it ever
+// reaches Turndown, since Turndown's own head handling is unreliable in Node.
+function stripHead(html: string): string {
+  return html.replace(/<head[^>]*>[\s\S]*?<\/head>/i, '');
 }
 
 function normalizeMarkdown(markdown: string): string {

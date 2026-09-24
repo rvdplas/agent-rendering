@@ -11,8 +11,6 @@ export async function renderAgentPageAsHtml(
 
   targetUrl.search = request.nextUrl.search;
 
-  console.log('TargetURL:', targetUrl.href);
-
   const headers = new Headers();
 
   copyHeader(request, headers, 'user-agent');
