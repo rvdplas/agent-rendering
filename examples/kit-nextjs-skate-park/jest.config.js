@@ -233,5 +233,9 @@ const config = {
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(config);
+// next/jest replaces (rather than merges) transformIgnorePatterns, so it's re-applied after resolution here.
+module.exports = async () => ({
+  ...(await createJestConfig(config)()),
+  transformIgnorePatterns: config.transformIgnorePatterns,
+});
 

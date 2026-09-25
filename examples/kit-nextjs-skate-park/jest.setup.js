@@ -1,5 +1,42 @@
 import '@testing-library/jest-dom';
 
+// Some test files run under the "node" environment (no window/DOM); only polyfill for jsdom tests.
+if (typeof window !== 'undefined') {
+  // jsdom has no matchMedia implementation; embla-carousel (used by ui/carousel.tsx) needs it to mount.
+  window.matchMedia =
+    window.matchMedia ||
+    function (query) {
+      return {
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      };
+    };
+
+  // jsdom has no IntersectionObserver; embla-carousel uses it to track slides in view.
+  global.IntersectionObserver =
+    global.IntersectionObserver ||
+    class IntersectionObserver {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    };
+
+  // jsdom has no ResizeObserver; embla-carousel uses it to react to slide/container size changes.
+  global.ResizeObserver =
+    global.ResizeObserver ||
+    class ResizeObserver {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    };
+}
+
 // Mock Next.js router
 jest.mock('next/router', () => ({
   useRouter() {

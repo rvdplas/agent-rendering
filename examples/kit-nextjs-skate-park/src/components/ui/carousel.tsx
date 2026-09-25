@@ -134,13 +134,14 @@ const Carousel = React.forwardRef<
 });
 Carousel.displayName = 'Carousel';
 
-const CarouselContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+// Slides are a list, not anonymous divs, so list semantics survive to the a11y tree.
+const CarouselContent = React.forwardRef<HTMLUListElement, React.HTMLAttributes<HTMLUListElement>>(
   ({ className, ...props }, ref) => {
     const { carouselRef, orientation } = useCarousel();
 
     return (
       <div ref={carouselRef} className="overflow-hidden">
-        <div
+        <ul
           ref={ref}
           className={cn(
             'flex',
@@ -155,14 +156,13 @@ const CarouselContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HT
 );
 CarouselContent.displayName = 'CarouselContent';
 
-const CarouselItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+const CarouselItem = React.forwardRef<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>(
   ({ className, ...props }, ref) => {
     const { orientation } = useCarousel();
 
     return (
-      <div
+      <li
         ref={ref}
-        role="group"
         aria-roledescription="slide"
         className={cn(
           'min-w-0 shrink-0 grow-0 basis-full',

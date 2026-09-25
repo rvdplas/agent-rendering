@@ -84,7 +84,27 @@ export type ProductJsonLd = {
   description?: string;
   image?: string | string[];
   url?: string;
+  offers?: {
+    '@type': 'Offer';
+    price?: string;
+    priceCurrency?: string;
+  };
 };
+
+// Best-effort mapping from a formatted price string (e.g. "$149.99") to schema.org Offer fields.
+const CURRENCY_SYMBOLS: Record<string, string> = { $: 'USD', '\u20ac': 'EUR', '\u00a3': 'GBP' };
+
+export function parsePriceText(rawInput: string | number): { price?: string; priceCurrency?: string } {
+  // Some Price fields resolve as Number rather than Text, so normalize before string ops.
+  const raw = String(rawInput);
+  const symbol = Object.keys(CURRENCY_SYMBOLS).find((s) => raw.includes(s));
+  const numeric = raw.replace(/[^0-9.,]/g, '').replace(',', '.');
+
+  return {
+    price: numeric || undefined,
+    priceCurrency: symbol ? CURRENCY_SYMBOLS[symbol] : undefined,
+  };
+}
 
 export type PlaceJsonLd = {
   '@context': 'https://schema.org';
@@ -105,13 +125,32 @@ export type FaqPageJsonLd = {
   }>;
 };
 
+// Common named entities from CMS rich text; numeric entities (&#233; / &#xe9;) are decoded separately below.
+const NAMED_HTML_ENTITIES: Record<string, string> = {
+  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
+  eacute: '\u00e9', egrave: '\u00e8', ecirc: '\u00ea', euml: '\u00eb',
+  aacute: '\u00e1', agrave: '\u00e0', acirc: '\u00e2', auml: '\u00e4',
+  iacute: '\u00ed', igrave: '\u00ec', icirc: '\u00ee', iuml: '\u00ef',
+  oacute: '\u00f3', ograve: '\u00f2', ocirc: '\u00f4', ouml: '\u00f6',
+  uacute: '\u00fa', ugrave: '\u00f9', ucirc: '\u00fb', uuml: '\u00fc',
+  ntilde: '\u00f1', ccedil: '\u00e7',
+};
+
+const decodeHtmlEntities = (text: string): string =>
+  text
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(Number(dec)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+    .replace(/&([a-zA-Z]+);/g, (match, name) => NAMED_HTML_ENTITIES[name.toLowerCase()] ?? match);
+
 const stripHtml = (html: string): string =>
-  html
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script[^>]*>/gi, ' ')
-    .replace(/<style[\s\S]*?>[\s\S]*?<\/style[^>]*>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  decodeHtmlEntities(
+    html
+      .replace(/<script[\s\S]*?>[\s\S]*?<\/script[^>]*>/gi, ' ')
+      .replace(/<style[\s\S]*?>[\s\S]*?<\/style[^>]*>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+  );
 
 const extractFaqEntriesFromHtml = (html?: string): Array<{ question: string; answer: string }> => {
   if (!html) return [];
@@ -167,8 +206,10 @@ export function buildProductJsonLd(input: {
   descriptionHtml?: string;
   image?: string | string[];
   url?: string;
+  priceText?: string | number;
 }): ProductJsonLd {
   const description = input.descriptionHtml ? stripHtml(input.descriptionHtml) : undefined;
+  const { price, priceCurrency } = input.priceText != null ? parsePriceText(input.priceText) : {};
 
   return {
     '@context': 'https://schema.org',
@@ -176,7 +217,8 @@ export function buildProductJsonLd(input: {
     name: input.name,
     description,
     image: input.image,
-    url: input.url,
+    url: input.url || undefined,
+    offers: price ? { '@type': 'Offer', price, priceCurrency } : undefined,
   };
 }
 

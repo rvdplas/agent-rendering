@@ -25,6 +25,7 @@ export default defineCliConfig({
       'src/components/content-sdk/*',
       'src/components/atoms/**',
       'src/components/ui/**',
+      'src/components/carousel/slides/**',
       '**/*.props.ts',
       '**/*.props.tsx',
       '**/*.schema.ts',
