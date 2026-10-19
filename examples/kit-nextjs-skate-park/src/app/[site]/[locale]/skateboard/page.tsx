@@ -21,7 +21,13 @@ export default async function SkateboardPage({ searchParams }: {
       else selection[category.id] = value;
     }
   }
-  for (const key of ['assembly', 'insurance'] as const) {
+  for (const key of ['country', 'shipping'] as const) {
+    if (query[key] !== undefined) {
+      if (typeof query[key] !== 'string') invalid = true;
+      else selection[key] = query[key];
+    }
+  }
+  for (const key of ['assembly', 'insurance', 'transportInsurance'] as const) {
     if (query[key] !== undefined) {
       if (query[key] !== 'true' && query[key] !== 'false') invalid = true;
       selection[key] = query[key] === 'true';

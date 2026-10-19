@@ -22,8 +22,15 @@
 .skate-choice strong { display: block; font-size: 15px; overflow-wrap: anywhere; }
 .skate-choice small { display: block; margin-top: 5px; font: 12px/1.5 monospace; color: #526057; }
 .skate-choice b { font: bold 13px monospace; flex-shrink: 0; }
+.skate-choice > .skate-option-price { flex: 0 0 112px; text-align: right; }
+.skate-option-price .skate-price-selected { font-size: 11px; color: var(--skate-green); }
+.skate-option-price small { white-space: nowrap; }
 .skate-options fieldset:last-child .skate-choice { margin-top: 8px; }
 .skate-included, .skate-terms { font: 12px/1.65 monospace; color: #526057; }
+.skate-country { display: block; margin-bottom: 8px; font: bold 14px monospace; }
+.skate-options select { display: block; width: 100%; min-height: 44px; padding: 10px; margin-bottom: 16px; border: 1px solid #cdd5cd; border-radius: 4px; background: #fff; color: var(--skate-ink); font: 14px monospace; }
+.skate-options select:focus-visible { outline: 2px solid var(--skate-green); outline-offset: 3px; }
+.skate-shipping-message { border-left: 3px solid var(--skate-accent); padding-left: 12px; margin: 20px 0; font: 13px/1.65 monospace; color: var(--skate-accent); overflow-wrap: anywhere; }
 .skate-summary { position: sticky; top: 24px; min-width: 0; }
 .skate-photo { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 4px 4px 0 0; background: #dbe4dc; }
 .skate-receipt { background: var(--skate-green); color: #fff; padding: 28px; min-height: 330px; }
@@ -47,4 +54,4 @@
 .skate-agent th, .skate-agent td { padding: 12px 8px; border-bottom: 1px solid #cdd5cd; text-align: left; vertical-align: top; }
 .skate-agent p { line-height: 1.7; margin: 16px 0; }
 .skate-agent pre { padding: 20px; background: #e9eee5; overflow: auto; }
-@media (max-width: 760px) { .skate-builder { grid-template-columns: minmax(0, 1fr); gap: 24px; } .skate-summary { position: static; } .skate-intro { padding-top: 32px; } .skate-intro h1 { font-size: 36px; } .skate-header > span { max-width: 100px; text-align: right; } .skate-choice { padding: 12px; gap: 8px; } .skate-choice strong { font-size: 14px; } .skate-receipt { padding: 22px; } .skate-agent table { font-size: 11px; } .skate-agent td, .skate-agent th { padding: 8px 4px; } }
+@media (max-width: 760px) { .skate-builder { grid-template-columns: minmax(0, 1fr); gap: 24px; } .skate-summary { position: static; } .skate-intro { padding-top: 32px; } .skate-intro h1 { font-size: 36px; } .skate-header > span { max-width: 100px; text-align: right; } .skate-choice { padding: 12px; gap: 8px; } .skate-choice strong { font-size: 14px; } .skate-choice > .skate-option-price { flex-basis: 88px; } .skate-receipt { padding: 22px; } .skate-agent table { font-size: 11px; } .skate-agent td, .skate-agent th { padding: 8px 4px; } }

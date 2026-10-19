@@ -27,13 +27,38 @@ catalog, not CMS product content. No serialized authoring items are added.
 
 - `GET /api/skateboard/catalog`: options, prices in integer cents, defaults, and terms.
 - `POST /api/skateboard/quote`: validates the selection and calculates server-owned prices.
+- `POST /api/skateboard/delivery`: returns shipping methods and transport cover for the selected country and server-calculated subtotal.
 - `/skateboard?view=agent`: server-rendered tables of every option and the selected quote.
 
 Recognized AI User-Agents automatically receive the agent rendering. The agent
 representation needs neither interaction nor JavaScript to expose the prices.
 Both renderings use the same catalog and price calculation. The calculator calls
-the quote API on changes, cancels superseded requests, and hides stale totals on
-failure. Successful selections are preserved in shareable URL parameters.
+the delivery API on changes and only then reveals its shipping and transport
+insurance options. It subsequently calls the quote API, cancels superseded
+requests, and hides stale totals on failure. Successful selections, including
+destination, shipping method and optional transport cover, are preserved in
+shareable URL parameters. The agent rendering exposes all delivery rules and
+rates for all destinations without a client-side request.
+
+### Delivery Rules (Demo)
+
+- The threshold is strictly **above EUR 199**, based on parts, mandatory hardware
+    and optional assembly. Shipping and both insurance types do not count toward it.
+- In the Netherlands, standard shipping costs EUR 4.95 up to EUR 199, then becomes
+    free. Express costs EUR 9.95, reduced to a EUR 5 surcharge above the threshold.
+- Belgium and Germany cost EUR 8.95 standard or EUR 16.95 express, without free shipping.
+- Outside the EU, only international shipping at EUR 24.95 is available. Import
+    duties and local taxes are not included. Other destinations are not modeled.
+- Above EUR 199, transport insurance is required and included for every destination.
+    At or below EUR 199, it is optional: EUR 1.99 in NL, EUR 2.99 in BE/DE, EUR 4.99
+    outside the EU. It covers the order subtotal during transit, without a monthly fee.
+- The fictional monthly skateboard policy remains a separate optional product.
+
+Use **Budgetsetup** for a EUR 97 subtotal: the Netherlands message shows
+"Nog EUR 102,01" until free shipping. A cruiser deck with Hollow trucks, soft wheels
+and standard bearings has a EUR 197 subtotal. Adding assembly raises it to EUR 212,
+with free standard shipping and mandatory included transport insurance. At exactly
+EUR 199, another EUR 0.01 is needed. These are fictional demo rates, not real offers.
 
 Example request:
 
@@ -43,7 +68,7 @@ curl http://localhost:3000/api/skateboard/quote \
     -d '{"deck":"street","trucks":"standard","wheels":"street","bearings":"standard","assembly":true,"insurance":true}'
 ```
 
-This selection costs EUR 157.00 once, plus EUR 4.99 per month separately.
+This selection costs EUR 161.95 once including shipping, plus EUR 4.99 per month separately.
 All demo prices include VAT. Trucks and wheels are complete sets; griptape and
 hardware are mandatory. The demo assumes matched trucks for each deck and allows
 every catalog combination. Insurance is fictional and cannot be purchased; its
@@ -52,7 +77,7 @@ terms are visible in both renderings. There is no checkout or real policy.
 Run focused tests with:
 
 ```sh
-npm run test:unit -- --runInBand --coverage=false --runTestsByPath src/__tests__/lib/skateboard.test.ts src/__tests__/components/skateboard-calculator.test.tsx
+npm run test:unit -- --runInBand --coverage=false --runTestsByPath src/__tests__/lib/skateboard.test.ts src/__tests__/lib/skateboard-delivery.test.ts src/__tests__/components/skateboard-calculator.test.tsx
 ```
 
 ## Developer Expectations
