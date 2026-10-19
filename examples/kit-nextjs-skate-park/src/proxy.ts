@@ -11,6 +11,7 @@ import sites from '.sitecore/sites.json';
 import scConfig from 'sitecore.config';
 import { routing } from './i18n/routing';
 import client from './lib/sitecore-client';
+import { advertiseMarkdownRepresentation } from './lib/agent-markdown/markdown-rewrite';
 
 const preview = new PreviewProxy({
     client,
@@ -75,8 +76,14 @@ const personalize = new PersonalizeProxy({
   skip: () => false,
 });
 
-export default function proxy(req: NextRequest) {
-  return defineProxy(preview, locale, multisite, redirects, personalize).exec(req);
+export default async function proxy(req: NextRequest) {
+  const response = await defineProxy(preview, locale, multisite, redirects, personalize).exec(req);
+
+  if (response.status === 200 && (req.method === 'GET' || req.method === 'HEAD')) {
+    advertiseMarkdownRepresentation(response.headers, req.nextUrl);
+  }
+
+  return response;
 }
 
 export const config = {

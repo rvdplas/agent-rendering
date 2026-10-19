@@ -8,6 +8,7 @@ import { Form } from '@sitecore-content-sdk/nextjs';
 // end of built-in import section
 import * as Title from 'src/components/title/Title';
 import * as StructuredData from 'src/components/structured-data/StructuredData';
+import * as SkateboardCalculator from 'src/components/skateboard-calculator/SkateboardCalculator';
 import * as RowSplitter from 'src/components/row-splitter/RowSplitter';
 import * as RichText from 'src/components/rich-text/RichText';
 import * as Promo from 'src/components/promo/Promo';
@@ -27,6 +28,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['Form', { ...Form, componentType: 'client' }],
   ['Title', { ...Title }],
   ['StructuredData', { ...StructuredData }],
+  ['SkateboardCalculator', { ...SkateboardCalculator, componentType: 'client' }],
   ['RowSplitter', { ...RowSplitter }],
   ['RichText', { ...RichText }],
   ['Promo', { ...Promo }],

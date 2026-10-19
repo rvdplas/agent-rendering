@@ -16,3 +16,17 @@ export const markdownContentNegotiationRewrite = {
     },
   ],
 } as const;
+
+export function advertiseMarkdownRepresentation(headers: Headers, url: URL): void {
+  if (
+    /^\/(?:api|_next|sitecore|healthz|ai|agent-markdown|\.well-known|-)(?:\/|$)/.test(
+      url.pathname
+    ) ||
+    /\.[^/]+$/.test(url.pathname)
+  ) {
+    return;
+  }
+
+  const alternate = `<${url.pathname}${url.search}>; rel="alternate"; type="text/markdown"`;
+  headers.append('Link', alternate);
+}
