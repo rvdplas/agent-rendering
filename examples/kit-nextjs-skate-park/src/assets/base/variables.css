@@ -2,42 +2,42 @@
   --font-roboto: 'Roboto', 'sans-serif';
   /* // abstract/vars /_colors: */
 
-  --color-main-color: #27272a;
+  --color-main-color: #18251f;
 
   /* //Backgrounds colors */
-  --color-bg-basic-color: #ffffff;
-  --color-bg-light-gray: #f7f7f7;
-  --color-bg-lighter-gray: #fafafa;
-  --color-bg-light-gray-active: #dadada;
-  --color-bg-blue: #89c6cc;
-  --color-bg-blue-active: #15909c;
+  --color-bg-basic-color: #f7f8f5;
+  --color-bg-light-gray: #eef3e6;
+  --color-bg-lighter-gray: #ffffff;
+  --color-bg-light-gray-active: #dbe4dc;
+  --color-bg-blue: #165d45;
+  --color-bg-blue-active: #124b38;
   --color-bg-black: #000;
-  --color-bg-black-active: #3d3d3d;
+  --color-bg-black-active: #165d45;
   --color-page-bg-editor: none;
-  --color-bg-dark-gray: #262626;
-  --color-bg-submenu: #edebeb;
-  --color-bg-submenu-active: #f6f6f6;
+  --color-bg-dark-gray: #165d45;
+  --color-bg-submenu: #eef3e6;
+  --color-bg-submenu-active: #ffffff;
   /* //Text colors */
   --color-text-white: #fff;
-  --color-text-heading-color: #222;
-  --color-text-basic: #747474;
-  --color-text-basic-active: #878787;
-  --color-text-blue: #89c6cc;
-  --color-text-blue-active: #15909c;
+  --color-text-heading-color: #18251f;
+  --color-text-basic: #18251f;
+  --color-text-basic-active: #165d45;
+  --color-text-blue: #165d45;
+  --color-text-blue-active: #124b38;
   --color-text-red: #de232f;
   /* //Border colors */
-  --color-border-gray: #d2d2d2;
-  --color-border-basic-color: #89c6cc;
+  --color-border-gray: #cdd5cd;
+  --color-border-basic-color: #165d45;
 
   /* //Buttons colors */
-  --color-btn-green-light: #a0ce4e;
-  --color-btn-green: #92be43;
+  --color-btn-green-light: #165d45;
+  --color-btn-green: #124b38;
   --color-btn-red-active: #c34e30;
   --color-btn-red: #bc4526;
   /* //other */
   --color-promo-bg-hero: rgba(0, 0, 0, 0.5);
-  --color-menu-hover-color: #1b809e;
-  --color-menu-active-color: #176f89;
+  --color-menu-hover-color: #165d45;
+  --color-menu-active-color: #165d45;
 
   /* // abstract/vars /_fontSizes: */
   --text-font-small: 11px;
@@ -63,17 +63,23 @@
 
 /* shadcn/ui semantic tokens (gray theme), consumed by src/components/ui/* primitives */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
+  --skate-ink: #18251f;
+  --skate-green: #165d45;
+  --skate-accent: #d9ee6c;
+  --skate-muted: #526057;
+  --skate-font: Georgia, 'Times New Roman', serif;
+  --skate-mono: 'Courier New', monospace;
+  --background: #f7f8f5;
+  --foreground: var(--skate-ink);
+  --primary: var(--skate-green);
+  --primary-foreground: #ffffff;
+  --secondary: #eef3e6;
+  --secondary-foreground: var(--skate-ink);
+  --accent: var(--skate-accent);
+  --accent-foreground: var(--skate-ink);
+  --border: #cdd5cd;
+  --input: #cdd5cd;
+  --ring: var(--skate-green);
 }
 
 @theme inline {

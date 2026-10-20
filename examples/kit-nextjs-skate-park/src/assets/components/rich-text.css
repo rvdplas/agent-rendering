@@ -1,8 +1,11 @@
 /* component-richtext-content */
 
 .content,
+.contentBlock,
 .rich-text {
-  @apply border-transparent leading-[1.5] text-[12px] overflow-hidden;
+  @apply border-transparent leading-[1.75] text-[16px];
+  min-width: 0;
+  overflow-wrap: anywhere;
 
   * {
     @apply max-w-full;
@@ -48,5 +51,36 @@
 /* base rich text */
 
 .rich-text {
-  @apply text-[16px] max-mobile-large:p-[0_30px_10px_30px] max-mobile-large:text-[14px];
+  padding-block: 20px;
+
+  p { margin: 0 0 20px; }
+  h2, h3, h4 { margin: 28px 0 16px; }
+  h2 { font-size: 28px; }
+  h3 { font-size: 23px; }
+  a { color: var(--primary); }
+  ul, ol { padding-left: 20px; margin: 0 0 20px; }
+  li { font-size: inherit; margin: 8px 0; }
+  ul li { list-style: disc outside; }
+  ol li { list-style: decimal outside; }
+}
+
+.content .field-content,
+.rich-text .field-text {
+  max-width: 72ch;
+}
+
+.content {
+  padding-block: 28px;
+  p { margin-bottom: 20px; }
+  a { color: var(--primary); }
+}
+
+.contentBlock {
+  width: 100%;
+  padding-block: 28px;
+  .contentTitle { font-size: 28px; margin: 0 0 20px; }
+  .contentDescription { max-width: 72ch; }
+  p { margin: 0 0 20px; }
+  a { color: var(--primary); }
+  li { font-size: inherit; }
 }

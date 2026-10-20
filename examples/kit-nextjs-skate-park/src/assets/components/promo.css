@@ -1,10 +1,10 @@
 /* component promo */
 
 .promo {
-  @apply bg-bg-basic-color p-[15px] overflow-hidden box-border;
+  @apply bg-transparent p-[12px] box-border;
 
   > .component-content {
-    @apply relative border border-solid border-border-gray;
+    @apply relative border border-solid border-border-gray rounded-[4px] bg-white overflow-hidden;
 
     &::after {
       content: '';
@@ -13,7 +13,7 @@
     }
 
     > div {
-      @apply p-[5px];
+      @apply p-[20px];
     }
   }
   .zg-height-fix {
@@ -24,11 +24,20 @@
   .field-promoicon {
     @apply overflow-hidden w-full;
     img {
-      @apply w-full h-auto;
+      @apply w-full h-auto aspect-[3/2] object-cover;
     }
   }
   .field-promolink {
-    @apply mt-[5px] pb-[10px];
+    @apply mt-[16px];
+    font: bold 13px/1.5 var(--skate-mono);
+    a { color: var(--primary); text-underline-offset: 4px; }
+  }
+
+  .field-promotext {
+    font-size: 16px;
+    line-height: 1.7;
+    h2, h3, h4 { font-size: 23px; margin: 0 0 16px; }
+    p { margin: 0 0 12px; }
   }
 
   &.image-full-size {
@@ -77,25 +86,14 @@
 /* promo shadow */
 
 .promo-shadow {
-  @apply max-w-[960px] p-0 border-solid border-3 border-t-border-basic-color overflow-visible relative;
+  @apply p-0 relative;
 
   &.promo {
     @apply float-left;
   }
 
   > .component-content {
-    @apply p-[15px] mt-0 mr-0 mb-[30px] ml-0 max-desktop:mt-0 max-desktop:mr-[10px] max-desktop:mb-[30px] max-desktop:ml-[10px];
-
-    &:before,
-    &:after {
-      @apply opacity-70 shadow-[0_17px_10px_rgba(0,0,0,0.7)] absolute z-[-1] h-[20%] max-h-[100px] max-w-[460px] w-[47%] [content:''] bottom-[10px];
-    }
-    &:before {
-      @apply left-[2%] rotate-[-3deg];
-    }
-    &:after {
-      @apply right-[2%] rotate-[3deg];
-    }
+    @apply mb-[24px];
   }
 }
 
@@ -109,10 +107,10 @@
 
 .promo {
   &.main-promo-no-border {
-    @apply pl-0 pr-0 pb-0 mb-[80px] max-mobile-large:mb-0;
+    @apply p-[12px] mb-[24px];
 
     > .component-content {
-      @apply border-0 max-w-[583px] mr-[50px] max-mobile-large:max-w-full max-mobile-large:mr-0;
+      @apply border-0 rounded-none bg-transparent;
 
       > div {
         @apply pb-0;
@@ -120,10 +118,10 @@
 
       .promo-text {
         .field-promotext {
-          @apply text-[14px];
+          @apply text-[16px] leading-[1.7];
 
           h3 {
-            @apply text-[18px] my-[15px] mx-0 max-mobile-large:my-[10px];
+            @apply text-[23px] my-[16px] mx-0;
           }
 
           p {
@@ -137,7 +135,7 @@
       }
 
       .promo-text {
-        @apply max-mobile-large:pt-[15px] max-mobile-large:pb-[5px] max-mobile-large:px-[30px];
+        @apply pt-[20px] px-0;
       }
     }
   }

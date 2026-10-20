@@ -61,8 +61,7 @@ export const Default = ({ params, fields }: CarouselProps): JSX.Element => {
 
   return (
     <div className={componentClasses} id={id}>
-      {/* px reserves room for the shadcn prev/next buttons, which sit outside the carousel bounds */}
-      <div className="component-content px-10 sm:px-14">
+      <div className="component-content">
         <CarouselRoot opts={{ align: 'start', loop: true }} className="w-full" aria-label={ariaLabel}>
           <CarouselContent>
             {slides.map((slide) => (
@@ -71,8 +70,10 @@ export const Default = ({ params, fields }: CarouselProps): JSX.Element => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <div className="carousel-controls">
+            <CarouselPrevious className="carousel-control" title="Previous slide" />
+            <CarouselNext className="carousel-control" title="Next slide" />
+          </div>
         </CarouselRoot>
       </div>
     </div>

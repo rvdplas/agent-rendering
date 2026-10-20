@@ -1,4 +1,5 @@
-.skate-page { --skate-ink: #18251f; --skate-green: #165d45; --skate-accent: #d9ee6c; color: var(--skate-ink); background: #f7f8f5; min-height: 100vh; padding: 0 max(24px, calc((100% - 1200px) / 2)); font-family: Georgia, serif; letter-spacing: 0; }
+.skate-page { color: var(--skate-ink); background: var(--background); min-height: 100vh; padding: 0 max(24px, calc((100% - 1200px) / 2)); font-family: var(--skate-font); letter-spacing: 0; }
+.skate-page-embedded { width: 100%; min-width: 0; min-height: 0; padding: 0; }
 .skate-page * { box-sizing: border-box; }
 .skate-page a { color: inherit; }
 .skate-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 28px 0; border-bottom: 1px solid #cdd5cd; font: 12px monospace; }

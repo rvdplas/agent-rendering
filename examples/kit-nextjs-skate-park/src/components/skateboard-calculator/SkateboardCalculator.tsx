@@ -14,7 +14,7 @@ import '../../app/[site]/[locale]/skateboard/skateboard.css';
 
 export const Default = ({ params }: SkateboardCalculatorRenderingProps) => {
   const { page } = useSitecore();
-  return <section className={`skate-page ${params?.styles || ''}`} id={params?.RenderingIdentifier} lang="nl" aria-label="Skateboard samenstellen">
+  return <section className={`skate-page skate-page-embedded ${params?.styles || ''}`} id={params?.RenderingIdentifier} lang="nl" aria-label="Skateboard samenstellen">
     <SkateboardCalculator initialSelection={DEFAULT_SELECTION} initialQuote={calculateQuote(DEFAULT_SELECTION)} agent={getConsumerMode(page) === 'agent'} />
   </section>;
 };

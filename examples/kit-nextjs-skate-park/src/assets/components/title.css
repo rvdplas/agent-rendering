@@ -3,7 +3,7 @@
 
   h1,
   .field-title {
-    @apply border-b-1 border-solid border-border-basic-color text-[24px] mb-[10px] text-text-basic leading-[normal] pb-[10px] block no-underline cursor-pointer hover:text-text-basic-active;
+    @apply border-b border-solid border-border-gray text-[36px] mb-[24px] text-text-heading-color leading-[1.15] pb-[20px] block no-underline max-mobile-large:text-[30px];
 
     > a,
     > span {

@@ -1,14 +1,26 @@
 /* component image  */
 .image {
   img {
-    @apply w-full h-auto;
+    @apply w-full h-auto rounded-[4px];
   }
   a {
     @apply inline-block max-w-full;
   }
   span {
-    @apply block italic text-font-small text-text-basic;
+    @apply block text-font-small;
+    color: var(--skate-muted);
+    font-family: var(--skate-mono);
   }
+}
+
+.hero-banner {
+  margin-block: 0 36px;
+  .component-content { overflow: hidden; border-radius: 4px; }
+  img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; }
+}
+
+@media (max-width: 760px) {
+  .hero-banner img { aspect-ratio: 4 / 3; }
 }
 
 /* components image */

@@ -34,7 +34,7 @@ export const SlideFigure = ({
   return (
     // Each slide is a self-contained, independently distributable unit (name/image/price/description), hence <article>.
     <article
-      className="flex h-full flex-col gap-3"
+      className={`slide-figure${itemType === 'https://schema.org/Product' ? ' slide-figure-product' : ''}`}
       {...(itemType ? { itemScope: true, itemType } : {})}
     >
       {hasImage && (
@@ -47,7 +47,7 @@ export const SlideFigure = ({
                   tag={headingLevel}
                   field={Title}
                   itemProp={titleItemProp}
-                  className="text-lg font-semibold"
+                  className="slide-title"
                 />
               )}
               {extra}
@@ -56,7 +56,7 @@ export const SlideFigure = ({
                   tag="div"
                   field={Description}
                   itemProp={descriptionItemProp}
-                  className="text-sm text-gray-600"
+                  className="slide-description"
                 />
               )}
             </figcaption>
@@ -64,7 +64,7 @@ export const SlideFigure = ({
           <ContentSdkImage
             field={Image}
             itemProp={imageItemProp}
-            className="aspect-video w-full rounded-md object-cover"
+            className="slide-image"
           />
         </figure>
       )}
@@ -73,7 +73,7 @@ export const SlideFigure = ({
           tag={headingLevel}
           field={Title}
           itemProp={titleItemProp}
-          className="text-lg font-semibold"
+          className="slide-title"
         />
       )}
       {!hasImage && extra}
@@ -82,11 +82,11 @@ export const SlideFigure = ({
           tag="div"
           field={Description}
           itemProp={descriptionItemProp}
-          className="text-sm text-gray-600"
+          className="slide-description"
         />
       )}
       {Link?.value?.href && (
-        <CompatibleLink field={Link} className="text-sm font-medium underline underline-offset-4" />
+        <CompatibleLink field={Link} className="slide-link" />
       )}
     </article>
   );

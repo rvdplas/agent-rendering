@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, JSX } from 'react';
+import { Menu, X } from 'lucide-react';
 import { LinkField, Text, TextField, useSitecore, FieldMetadata } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import { getFieldValue } from 'lib/component-props';
@@ -168,7 +169,9 @@ export const Default = ({ params, fields }: NavigationProps) => {
           onChange={() => handleToggleMenu()}
           aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
         />
-        <div className="menu-humburger" />
+        <span className="menu-humburger" aria-hidden="true">
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </span>
         <div className="component-content">
           <nav>
             <ul className="clearfix">{navigationItems}</ul>

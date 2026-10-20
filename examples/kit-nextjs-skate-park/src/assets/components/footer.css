@@ -1,24 +1,35 @@
 footer {
-  @apply max-mobile-large:pt-0;
+  border-top: 1px solid var(--skate-green);
+  background: var(--skate-green);
+  color: var(--primary-foreground);
+  font: 12px/1.7 var(--skate-mono);
+
+  #footer { padding-block: 28px; }
 
   .container-dark-background {
-    @apply bg-bg-dark-gray;
+    background: transparent;
   }
 
   .contacts {
-    @apply text-[14px];
+    font-size: 12px;
 
     a {
-      @apply text-text-white;
+      color: inherit;
     }
 
     p,
     span {
-      @apply text-text-white;
+      color: inherit;
     }
   }
 
   .indent-inner {
-    @apply p-[65px] max-mobile-large:p-[40px_0];
+    padding: 20px 0;
   }
+
+  .rich-text { padding: 0; font: inherit; }
+  a, .rich-text a { color: inherit; }
+  a:hover, .rich-text a:hover { color: var(--skate-accent); }
+  a:focus-visible { outline-color: var(--skate-accent); }
+  p, .rich-text p { margin: 0 0 8px; }
 }

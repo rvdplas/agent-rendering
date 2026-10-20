@@ -5,3 +5,14 @@
     @apply px-[5px];
   }
 }
+
+.row.column-splitter:has(> div > .row > .carousel) > div {
+  width: 100%;
+}
+
+@media (max-width: 760px) {
+  .row.column-splitter > div {
+    width: 100%;
+    padding-inline: 0;
+  }
+}

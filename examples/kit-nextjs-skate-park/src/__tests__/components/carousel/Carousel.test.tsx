@@ -64,4 +64,18 @@ describe('Carousel Component should', () => {
     expect(data).toHaveAttribute('value', '$149.99');
     expect(data).toHaveTextContent('$149.99');
   });
+
+  it('use the product presentation for skateboard images', () => {
+    render(<Carousel {...mockCarouselPropsSkateboard} />);
+    const product = document.querySelector('article[itemtype="https://schema.org/Product"]');
+    expect(product).toHaveClass('slide-figure-product');
+    expect(product?.querySelector('img')).toHaveClass('slide-image');
+  });
+
+  it('keep generic slides separate from the product presentation', () => {
+    render(<Carousel {...mockCarouselProps} />);
+    expect(document.querySelector('.slide-figure-product')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Previous slide' })).toHaveAttribute('title', 'Previous slide');
+    expect(screen.getByRole('button', { name: 'Next slide' })).toHaveAttribute('title', 'Next slide');
+  });
 });

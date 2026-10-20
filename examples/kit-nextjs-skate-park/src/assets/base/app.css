@@ -7,12 +7,13 @@ html {
 }
 
 body {
-  font-family: 'Open Sans', Helvetica, Verdana, Tahoma, sans-serif;
+  font-family: var(--skate-font);
   position: relative;
   overflow: auto;
   color: var(--color-text-basic);
   font-size: 16px;
   line-height: 1.5;
+  letter-spacing: 0;
   background: var(--color-bg-basic-color);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   height: auto !important;
@@ -24,7 +25,8 @@ body {
 a {
   color: var(--color-text-basic);
   cursor: pointer;
-  font-size: 0.85em;
+  font-size: inherit;
+  text-underline-offset: 4px;
   &:hover {
     color: var(--color-text-basic-active);
   }
@@ -37,6 +39,19 @@ h4,
 h5,
 h6 {
   font-weight: bold;
+  font-family: var(--skate-font);
+  color: var(--color-text-heading-color);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+:where(p, li, a) {
+  overflow-wrap: anywhere;
 }
 
 h1 {
